@@ -1,0 +1,2 @@
+# blask
+flask mini project
