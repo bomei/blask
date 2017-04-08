@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import requests
 import serial.tools.list_ports
 
@@ -6,8 +6,14 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():
-    return 'hello world'
+def root():
+    return 'hello'
+
+
+@app.route('/hello')
+@app.route('/hello/<name>')
+def hello_world(name=None):
+    return render_template('hello.html', name=name)
 
 
 @app.route('/show_com')
@@ -15,7 +21,7 @@ def show_coms():
     plist = serial.tools.list_ports.comports()
     ans = ''
     for com in plist:
-        ans += '{} - {}<br>'.format(com.device,com.description)
+        ans += '{} - {}<br>'.format(com.device, com.description)
     return ans
 
 
